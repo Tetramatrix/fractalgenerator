@@ -9,7 +9,7 @@
 require_once('fractal.php');
 
 $f = new fractal();
-$f->method=1; //0=mandelbrot,1=julia
+$f->method=2; //0=mandelbrot,1=julia,2=burning ship
 $f->len=30; //size
 $f->iterations = (integer)100;
 $im = $f->render(); 

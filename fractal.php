@@ -262,7 +262,7 @@ class fractal
     function complex($re,$im)
     {
 	//bcscale(8);
-        // Iteration durchfuehren
+        //Iteration durchfuehren
         
  	switch ($this->method) {
 		case 0:
@@ -281,25 +281,57 @@ class fractal
 			$re=-0.7;
         		$im=0.27015;
 			break;
+		case 2:
+			// burning ship
+			$iter = 0;
+        		$zIm=$im;
+        		$zRe=$re;
+			
 	}        
 
-        while ($zrsqr+$zisqr < 4
-         && $iter++ < $this->iterations)
-        {     
-            $zIm *= $zRe;
-            $zIm += $zIm;
-            $zIm += $im;
-            $zRe = $zrsqr-$zisqr+$re;
-            $zrsqr = $zRe*$zRe;
-            $zisqr = $zIm*$zIm;
+	switch ($this->method)
+	{
+	    case 2: {
 	    
-	    //$zIm = bcmul($zIm,$zRe);
-            //$zIm = bcadd($zIm,$zIm);
-            //$zIm = bcadd($zIm,$im);
-            //$zRe = bcadd(bcsub($zrsqr,$zisqr),$re);
-            //$zrsqr = $zRe*$zRe;
-            //$zisqr = $zIm*$zIm;
-        }
+		while ($zrsqr+$zisqr < 4
+		 && $iter++ < $this->iterations)
+		{
+		    $zIm=abs($zIm*$zRe);
+		    $zIm += $zIm;
+		    $zIm += $im;
+		    $zRe = $zrsqr-$zisqr+$re;
+		    $zrsqr = $zRe*$zRe;
+		    $zisqr = $zIm*$zIm;
+		    
+		    //$zIm = bcmul($zIm,$zRe);
+		    //$zIm = bcadd($zIm,$zIm);
+		    //$zIm = bcadd($zIm,$im);
+		    //$zRe = bcadd(bcsub($zrsqr,$zisqr),$re);
+		    //$zrsqr = $zRe*$zRe;
+		    //$zisqr = $zIm*$zIm;
+		}
+	    }
+	    break;
+	    default: {
+		while ($zrsqr+$zisqr < 4
+		&& $iter++ < $this->iterations)
+	       {
+		   $zIm *= $zRe;
+		   $zIm += $zIm;
+		   $zIm += $im;
+		   $zRe = $zrsqr-$zisqr+$re;
+		   $zrsqr = $zRe*$zRe;
+		   $zisqr = $zIm*$zIm;
+		   
+		   //$zIm = bcmul($zIm,$zRe);
+		   //$zIm = bcadd($zIm,$zIm);
+		   //$zIm = bcadd($zIm,$im);
+		   //$zRe = bcadd(bcsub($zrsqr,$zisqr),$re);
+		   //$zrsqr = $zRe*$zRe;
+		   //$zisqr = $zIm*$zIm;
+	       }
+	    }
+	}
         return $iter;
     }
 
